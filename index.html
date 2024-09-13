@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Une surprise pour toi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            background-color: black;
+            color: white;
+        }
+
+        html,
+        body {
+            overflow-y: auto;
+            /* Permet le défilement */
+            height: 100%;
+            /* S'assurer que la page prend toute la hauteur */
+        }
+
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            object-fit:cover;
+        }
+
+        .content {
+            position: relative;
+            min-height: 100vh;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1;
+        }
+
+        #bouton {
+            background-color: rgba(255, 105, 180, 0.7);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            display: inline-block;
+            font-size: 24px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
+            animation: pulse 1.5s infinite;
+            max-width: 80%;
+            z-index: 10;
+        }
+
+        #bouton:hover {
+            background-color: rgba(255, 20, 147, 0.9);
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #message {
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 1s, transform 1s;
+            transform: translateY(20px);
+            max-width: 90%;
+            margin-top: 20px;
+        }
+
+        #message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(45deg);
+            animation: heartbeat 1s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            left: -10px;
+        }
+
+        .heart::after {
+            top: -10px;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1) rotate(45deg);
+            }
+
+            20% {
+                transform: scale(1.3) rotate(45deg);
+            }
+
+            40% {
+                transform: scale(1) rotate(45deg);
+            }
+        }
+
+        /* Styles responsive */
+        @media screen and (max-width: 768px) {
+            #bouton {
+                font-size: 20px;
+                padding: 12px 24px;
+            }
+
+            #message {
+                font-size: 18px;
+                color:red;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            #bouton {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+
+            #message {
+                font-size: 22px;
+            }
+
+            .heart {
+                width: 16px;
+                height: 16px;
+            }
+
+            .heart::before,
+            .heart::after {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        #boutonpos {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="video-background">
+        <source src="rose.mp4" type="video/mp4">
+    </video>
+
+    <div class="content">
+        <div id="message">
+            Happy Birthday to the most amazing person I know, on this special day that marks your birth, I want to tell
+            you how much you mean to me. From the moment you entered my life, everything became brighter and more
+            beautiful. Your smile lights up my darkest days, and your kindness never fails to warm my heart.
+
+            You are truly wonderful in every way, your strength inspires me to be a better person, your love gives me
+            the courage to face any challenge.
+
+            I love you more than words can express, you are not just my partner, you are my best friend, my confidant,
+            my soulmate. Every day with you is a gift, and I cherish every moment we spend together. Today, on your
+            birthday, I celebrate not only the day you were born but all that you are and all that you bring to my life.
+
+            You are the love of my life, and I promise to love, cherish, and support you always. Thank you for being
+            you, for choosing to share your life with me, and for making every day feel like a celebration. I hope this
+            birthday brings you as much joy as you bring to me.
+
+            I love you endlessly and forever. Happy Birthday, for always and forever.
+        </div>
+
+        <div id="boutonpos">
+            <button id="bouton">To Aya the love of my life</button>
+        </div>
+    </div>
+
+    <script>
+        const bouton = document.getElementById('bouton');
+        const message = document.getElementById('message');
+
+        bouton.addEventListener('click', function () {
+            this.style.display = 'none';
+            message.classList.add('visible');
+            createHearts();
+        });
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 2 + 's'; // Animation plus rapide
+                heart.style.opacity = Math.random() * 0.5 + 0.5; // Opacité minimale augmentée
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000); // Les cœurs restent visibles un peu moins longtemps
+            }, 150); // Les cœurs apparaissent plus fréquemment
+        }
+    </script>
+</body>
+
+</html>
