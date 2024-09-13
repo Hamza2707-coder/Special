@@ -13,12 +13,15 @@
             font-family: 'Dancing Script', cursive;
             background-color: black;
             color: white;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
         }
 
         html,
         body {
             overflow-y: auto;
             height: 100%;
+            width: 100%;
+            position: fixed; /* Fixe le corps de la page */
         }
 
         #video-background {
@@ -34,8 +37,12 @@
         }
 
         .content {
-            position: relative;
-            min-height: 100vh;
+            position: absolute; /* Change relative to absolute */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; /* Permet le défilement vertical si nécessaire */
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -98,12 +105,13 @@
         }
 
         .heart {
-            position: absolute;
+            position: fixed; /* Change absolute to fixed */
             width: 20px;
             height: 20px;
             background: red;
             transform: rotate(45deg);
             animation: heartbeat 1s infinite;
+            pointer-events: none; /* Empêche les cœurs d'interférer avec les interactions */
         }
 
         .heart::before,
@@ -147,7 +155,6 @@
 
             #message {
                 font-size: 18px;
-                color: red;
             }
         }
 
@@ -233,14 +240,15 @@
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 2 + 2 + 's'; // Animation plus rapide
-                heart.style.opacity = Math.random() * 0.5 + 0.5; // Opacité minimale augmentée
+                heart.style.top = Math.random() * 100 + 'vh'; // Positionne les cœurs verticalement
+                heart.style.animationDuration = Math.random() * 2 + 2 + 's';
+                heart.style.opacity = Math.random() * 0.5 + 0.5;
                 document.body.appendChild(heart);
 
                 setTimeout(() => {
                     heart.remove();
-                }, 4000); // Les cœurs restent visibles un peu moins longtemps
-            }, 150); // Les cœurs apparaissent plus fréquemment
+                }, 4000);
+            }, 150);
         }
     </script>
 </body>
