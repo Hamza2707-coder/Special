@@ -18,9 +18,7 @@
         html,
         body {
             overflow-y: auto;
-            /* Permet le défilement */
             height: 100%;
-            /* S'assurer que la page prend toute la hauteur */
         }
 
         #video-background {
@@ -188,10 +186,10 @@
     <video autoplay muted loop id="video-background">
         <source src="rose.mp4" type="video/mp4">
     </video>
-    <audio autoplay loop>
-  <source src="musique.mp3" type="audio/mp3">
-  Ton navigateur ne supporte pas la balise audio.
-</audio>
+    <audio id="background-music">
+        <source src="musique.mp3" type="audio/mp3">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
 
     <div class="content">
         <div id="message">
@@ -221,11 +219,13 @@
     <script>
         const bouton = document.getElementById('bouton');
         const message = document.getElementById('message');
+        const audio = document.getElementById('background-music');
 
         bouton.addEventListener('click', function () {
             this.style.display = 'none';
             message.classList.add('visible');
             createHearts();
+            audio.play(); // Commence la lecture de la musique
         });
 
         function createHearts() {
